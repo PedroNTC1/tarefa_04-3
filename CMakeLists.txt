@@ -34,8 +34,9 @@ project(Tarefa_u4 C CXX ASM)
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
+add_executable(Tarefa_u4 Tarefa_u4.c ssd1306.c)
 
-add_executable(Tarefa_u4 Tarefa_u4.c )
+pico_generate_pio_header(Tarefa_u4 ${CMAKE_CURRENT_LIST_DIR}/ws2818b.pio)
 
 pico_set_program_name(Tarefa_u4 "Tarefa_u4")
 pico_set_program_version(Tarefa_u4 "0.1")
@@ -51,12 +52,14 @@ target_link_libraries(Tarefa_u4
 # Add the standard include files to the build
 target_include_directories(Tarefa_u4 PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
+        ${CMAKE_CURRENT_LIST_DIR}/inc
 )
 
 # Add any user requested libraries
 target_link_libraries(Tarefa_u4 
-        hardware.pio
-        )
+        hardware_i2c
+        hardware_clocks
+        hardware_pio
+)
 
 pico_add_extra_outputs(Tarefa_u4)
-
